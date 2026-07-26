@@ -8,7 +8,7 @@ async function startServer(): Promise<void> {
 
   const server = app.listen(env.PORT, () => {
     console.log(`
-  🚑 Emergency Services Directory API
+  🚑 Emergency Services
   ────────────────────────────────────
   Environment: ${env.NODE_ENV}
   Server:      http://localhost:${env.PORT}
