@@ -22,7 +22,7 @@ app.use(
       console.log('🔍 CORS Origin Check:', { 
         receivedOrigin: origin, 
         allowedOrigins,
-        match: allowedOrigins.includes(origin)
+        match: origin ? allowedOrigins.includes(origin) : false
       });
       
       if (!origin || allowedOrigins.includes(origin)) {
