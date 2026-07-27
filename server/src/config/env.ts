@@ -15,7 +15,7 @@ function getEnvConfig(): EnvConfig {
   return {
     PORT: parseInt(process.env.PORT || '10000', 10),
     NODE_ENV: process.env.NODE_ENV || 'development',
-    CLIENT_URL: process.env.CLIENT_URL || 'http://localhost:5173',
+    CLIENT_URL: process.env.CLIENT_URL || 'http://localhost:3000',
     DATABASE_PATH: process.env.DATABASE_PATH || './data/database.sqlite',
   };
 }

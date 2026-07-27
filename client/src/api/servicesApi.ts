@@ -1,7 +1,10 @@
 import type { CreateServiceInput, UpdateServiceInput, ServiceType } from '../types/service';
 import type { ListServicesResponse, ServiceResponse, DeleteServiceResponse, FieldError } from '../types/api';
 
-const API_BASE = '/api';
+// In Vite React, env variables from .env must be prefixed with VITE_ and are accessed via import.meta.env
+const API_BASE = import.meta.env.VITE_API_BASE ?? '';
+
+console.log("API_BASEAPI_BASEAPI_BASEAPI_BASE", API_BASE)
 
 /**
  * Custom error class for API errors.
