@@ -8,18 +8,35 @@ const app = express();
 
 // --- Middleware ---
 
-// CORS — configured via environment variable (see §2.11)
+// CORS — More flexible for debugging
+const allowedOrigins = [
+  env.CLIENT_URL,
+  'https://find-ambulances-and-doctor-client.onrender.com',
+  'http://localhost:3000',
+  'http://localhost:3001',
+];
+
 app.use(
   cors({
-    origin: env.CLIENT_URL,
+    origin: function (origin, callback) {
+      console.log('🔍 CORS Origin Check:', { 
+        receivedOrigin: origin, 
+        allowedOrigins,
+        match: allowedOrigins.includes(origin)
+      });
+      
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('CORS not allowed'));
+      }
+    },
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: false,
   })
 );
 
-console.log("CLIENT_URLCLIENT_URLCLIENT_URLCLIENT_URL", env.CLIENT_URL)
-
-// Body parsing — explicit limit prevents large payload attacks
+// Body parsing
 app.use(express.json({ limit: '10kb' }));
 
 // --- Routes ---
