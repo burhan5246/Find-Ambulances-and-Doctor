@@ -14,6 +14,7 @@ async function startServer(): Promise<void> {
   Server:      http://localhost:${env.PORT}
   Health:      http://localhost:${env.PORT}/api/health
   API:         http://localhost:${env.PORT}/api/services
+  Client_URL:  ${env.CLIENT_URL}
   ────────────────────────────────────
     `);
   });
