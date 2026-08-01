@@ -20,7 +20,7 @@ interface UseServiceFormReturn {
  * Custom hook for service form operations (create, update, delete).
  * Maps backend validation errors to field-level errors for inline display.
  */
-export function useServiceForm(onSuccess: () => void): UseServiceFormReturn {
+export function useServiceForm(onSuccess: (isDeleted?: boolean) => void): UseServiceFormReturn {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
 
@@ -89,7 +89,7 @@ export function useServiceForm(onSuccess: () => void): UseServiceFormReturn {
       try {
         await servicesApi.deleteService(id);
         showToast('success', 'Service deleted successfully');
-        onSuccess();
+        onSuccess(true);
         return true;
       } catch (err) {
         handleApiError(err);

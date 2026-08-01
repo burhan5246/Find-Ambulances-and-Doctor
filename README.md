@@ -60,7 +60,6 @@ The application supports creating, updating, deleting, searching, and viewing he
 - React
 - TypeScript
 - Vite
-- Zod
 - Styled Components
 - React Router
 - Jest
@@ -135,8 +134,8 @@ npm run dev
 
 The app will be available at:
 - **Frontend:** http://localhost:3000
-- **Backend API:** http://localhost:3001/api/services
-- **Health check:** http://localhost:3001/api/health
+- **Backend API:** http://localhost:10000/api/services
+- **Health check:** http://localhost:10000/api/health
 
 
 

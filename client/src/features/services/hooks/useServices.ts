@@ -13,13 +13,14 @@ interface ServiceData {
 }
 
 interface UseServicesReturn extends ServiceData {
+  limit: number;
   page: number;
   typeFilter: ServiceType | undefined;
   searchQuery: string;
   setPage: (page: number) => void;
   setTypeFilter: (type: ServiceType | undefined) => void;
   setSearchQuery: (query: string) => void;
-  refetch: () => void;
+  refetch: (pageNum?:number) => void;
 }
 
 /**
@@ -32,6 +33,7 @@ interface UseServicesReturn extends ServiceData {
 export function useServices(): UseServicesReturn {
   // Filter/pagination state — separate atoms for stable dependencies
   const [page, setPageState] = useState(1);
+  const [limit, setLimit] = useState(10);
   const [typeFilter, setTypeFilterState] = useState<ServiceType | undefined>(undefined);
   const [searchQuery, setSearchQueryState] = useState('');
 
@@ -46,13 +48,13 @@ export function useServices(): UseServicesReturn {
 
   const debouncedSearch = useDebounce(searchQuery, 300);
 
-  const fetchServices = useCallback(async () => {
+  const fetchServices = useCallback(async (pageNum?:number) => {
     setServiceData((prev) => ({ ...prev, isLoading: true, error: null }));
-
+    //debugger;
     try {
       const response = await servicesApi.getServices({
-        page,
-        limit: 10,
+        page: pageNum || page,
+        limit,
         type: typeFilter,
         search: debouncedSearch || undefined,
       });
@@ -96,6 +98,7 @@ export function useServices(): UseServicesReturn {
 
   return {
     ...serviceData,
+    limit,
     page,
     typeFilter,
     searchQuery,

@@ -25,6 +25,8 @@ function App() {
     setTypeFilter,
     setSearchQuery,
     refetch,
+    page,
+    limit,
   } = useServices();
 
   // Modal state
@@ -33,12 +35,21 @@ function App() {
   const [deletingService, setDeletingService] = useState<Service | null>(null);
 
   // Stable callback for form operations — memoized to prevent cascading re-renders
-  const handleFormSuccess = useCallback(() => {
-    refetch();
+  const handleFormSuccess = useCallback((isDeleted?: boolean) => {
+    let pageNum = 0;
+    if(isDeleted) {
+      let tab = typeFilter || 'all';
+      if((totals?.[tab] - 1) % limit === 0 && page > 1) {
+        setPage(page - 1);
+        pageNum = page - 1;
+      }
+    }
+    //debugger;
+    refetch(pageNum);
     setIsFormOpen(false);
     setEditingService(null);
     setDeletingService(null);
-  }, [refetch]);
+  }, [refetch, totals, limit, page, setPage]);
 
   // Form operations
   const {
@@ -74,6 +85,8 @@ function App() {
     async (formData: CreateServiceInput) => {
       if (editingService) {
         await handleUpdate(editingService.id, formData);
+
+        
       } else {
         await handleCreate(formData);
       }
@@ -83,7 +96,8 @@ function App() {
 
   const handleConfirmDelete = useCallback(async () => {
     if (deletingService) {
-      await handleDelete(deletingService.id);
+      const isDeleted = await handleDelete(deletingService.id);
+      
     }
   }, [deletingService, handleDelete]);
 
