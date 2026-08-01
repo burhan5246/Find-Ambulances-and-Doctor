@@ -33,7 +33,7 @@ interface UseServicesReturn extends ServiceData {
 export function useServices(): UseServicesReturn {
   // Filter/pagination state — separate atoms for stable dependencies
   const [page, setPageState] = useState(1);
-  const [limit, setLimit] = useState(10);
+  const limit = 10;
   const [typeFilter, setTypeFilterState] = useState<ServiceType | undefined>(undefined);
   const [searchQuery, setSearchQueryState] = useState('');
 
